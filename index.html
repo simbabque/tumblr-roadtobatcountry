@@ -1,0 +1,866 @@
+<html>
+    <head>
+        <title>{Title}{block:SearchPage} ({lang:Search results for SearchQuery}){/block:SearchPage}{block:PermalinkPage}{block:PostSummary} — {PostSummary}{/block:PostSummary}{/block:PermalinkPage}</title>
+
+        <meta charset="utf-8">
+        <meta name="description" content="{block:IndexPage}{block:Description}{MetaDescription}{/block:Description}{/block:IndexPage}{block:PermalinkPage}{block:PostSummary}{PostSummary}{/block:PostSummary}{/block:PermalinkPage}" />
+
+        <meta name="text:Google Analytics ID" content=""/>
+        <meta name="text:Google Maps Key" content=""/>
+
+        <link rel="shortcut icon" href="{Favicon}" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="{RSS}"/>
+
+        <!-- HTML5 Shiv -->
+        <!--[if lt IE 9]>
+                <script src="http://static.tumblr.com/hriofhd/Qj0m8pn7q/html5shiv.js"></script>
+        <![endif]-->
+
+        <!-- Reset CSS -->
+        <link rel="stylesheet" href="http://static.tumblr.com/thpaaos/DIcklyl4z/reset.css" type="text/css">
+
+        <!-- Theme CSS -->
+        <style type="text/css" media="screen">
+            body {
+                -webkit-font-smoothing: antialiased;
+                font-size: 15px;
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                line-height: 24px;
+                margin: 0;
+                padding: 0;
+            }
+
+            *:active, *:focus { outline-width: 0px; }
+            .post .top.media img { width: 100%; }
+            a { text-decoration: none; color: {Color:Accent}; }
+            a img { border-width: 0px; }
+            strong { font-weight: bold; }
+            em { font-style: italic; }
+
+            .group:after {
+                visibility: hidden;
+                display: block;
+                content: "";
+                clear: both;
+                height: 0;
+                }
+            * html .group             { zoom: 1; } /* IE6 */
+            *:first-child+html .group { zoom: 1; } /* IE7 */
+
+            iframe#tumblr_controls {
+                top: 12px !important;
+                margin-right: 30px !important;
+            }
+            
+        </style>
+
+        <style>
+            html { height: 100% }
+            body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                font-family: sans-serif;
+            }
+            img {border: 0;}
+            #masthead { text-align: center; }
+            h1 {
+                width: 100%;
+                padding-top: 30px;
+                padding-bottom: 30px;
+            }
+            #masthead {
+                font-family: "Courier New";
+                font-weight: bold;
+            }
+            #container {
+                background-color: #FFF;
+                margin-right: 100px;
+                border-left: 3px solid rgb(209, 209, 201);
+                border-right: 2px solid rgb(230, 230, 225);
+                width: 740px;
+            }
+            #content {
+                position: fixed;
+                top: 0;
+                right: 0;
+                min-width: 800px;
+                width: 50%;
+                margin-left: 50%;
+                border-left: 13px solid rgba(170, 170, 170, 0.4);
+                height: 100%;
+                z-index: 100;
+                overflow: auto;
+            }
+            #blog { margin-top: 52px; }
+            #blog .post { margin: 1em; }
+            #footer { padding-bottom: 200px; background-color: white; }
+            
+            #map-canvas {
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 0;
+            }
+            #posts {
+                list-style-type: none;
+                padding: 0 50px;
+            }
+            .past {
+                margin: 0 auto;
+            }
+            .quote {
+                font-family: "Courier New";
+                font-weight: bold;
+                font-size: 24pt;
+                text-align: center;
+                line-height: 1em;
+            }
+            .caption h2 {
+                font-size: 32px;
+                font-weight: bolder;
+                font-family: "Courier New";
+                color: black;
+                text-align: center;
+                line-height: 1em;
+                margin-top: 1em;
+            }
+            .caption h2 a, .caption h2 a:active, .caption h2 a:visited  {
+                color: black;
+            }
+            .date {
+                font-family: "Courier New";
+                font-style: italic;
+                text-align: center;
+                margin-bottom: 2em;
+                margin-top: 2em;
+            }
+            .tags {
+                margin-bottom: 2em;
+                list-style-type: none;
+                color: grey;
+                font-family: "Courier New";
+                text-align: center;
+            }
+            .tags li {
+                display: inline;
+                margin-left: 1em;
+            }
+            .tags a {
+                color: inherit;
+            }
+            .tags a:hover {
+                background: grey;
+                color: white;
+            }
+            .divider {
+                width: 50px;
+                height: 50px;
+                margin: 2em auto;
+                background-size: 100%;
+            }
+            .divider-schlaumeyer {
+                background-image: url(http://static.tumblr.com/h8pbhse   /eTLmruhxi/klatsche.png);
+                background-image: url(http://static.tumblr.com/h8pbhse/HPBmruhgd/hut.png);
+            }
+            .divider-simbabque {
+/*                background-image: url(http://static.tumblr.com/h8pbhse/tp0mruhbw/brille.png);*/
+                background-image: url(http://static.tumblr.com/h8pbhse/s2Kmruhkl/kaktus.png);
+            }
+            .cont {
+                padding-left: 5em;
+                padding-right: 5em;
+                margin-bottom: 2em;
+            }
+            .cont p {
+                margin-bottom: 1em;
+            }
+            .cont a {
+                color: inherit;
+                text-decoration: underline;
+            }
+            .cont a:hover {
+                color: white;
+                background: black;
+            }
+            .photo {
+                margin-left: -65px;
+                margin-right: -65px;
+            }
+            .video {
+                margin-left: -45px;
+            }
+            .quote_source {
+                font-family: "courier new";
+                text-align: right;
+                margin-top: 1em;                
+            }
+            #footer a {
+                color: black;
+                text-decoration: underline;
+            }
+            #footer a:hover {
+                color: white;
+                background-color: black;
+            }
+        /*    a#prevPage {
+                display: block;
+                float: left;
+            }
+            a#nextPage {
+                display: block;
+                float:right;
+            }*/
+            #footer div#navigation {
+               /*  clear: both; */
+                font-family: "courier new";
+               text-align: center;
+               font-weight: bold;
+            }
+        </style>
+        
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={text:Google Maps Key}&sensor=false"></script>
+<script type="text/javascript">
+      var map; //Globales Google Map Objekt
+      google.maps.visualRefresh = true; // enable new gmap look for opt-inners
+
+      // Weil die Karte halb bedeckt ist, muss der Mittelpunkt weiter links sein
+      function custPanTo(map, coords) {
+        map.panTo(coords);
+        map.panBy(400, 0);
+      }
+  
+      // Sichtbare Posts handlen und Karte bewegen  
+      function moveToPostLocation(post) {
+        // alle Posts auf 'nicht mehr sichtbar'
+        $(".post").each(function() {
+          $(this).data('currentlyInView', false);
+        });
+      
+        // aktuellen Post als sichtbar speichern
+        $(post).data('currentlyInView', true);
+        
+        // Map aktuallisieren
+        if ($(post).data('coords')) {
+          custPanTo(map, $(post).data('coords'));
+        }
+      }
+  
+      // GoogleMap starten
+      google.maps.event.addDomListener(window, 'load', function() {
+          var mapOptions = {
+              center: $(".post:first").data('coords') || new google.maps.LatLng(37.775, -122.418),
+              // center: new google.maps.LatLng(37.775, -122.418),
+              zoom: 9,
+              mapTypeId: google.maps.MapTypeId.ROADMAP,
+              scrollwheel: false,
+              mapTypeControlOptions: {
+                  style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                  position: google.maps.ControlPosition.LEFT_BOTTOM
+              },
+              panControl: false,
+              scaleControl: true,
+              streetViewControl: false,
+              styles: [{
+                  "featureType": "landscape.natural.terrain",
+                  "elementType": "geometry.fill",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "landscape.man_made",
+                  "elementType": "geometry.fill",
+                  "stylers": [{
+                      "color": "#ffffff"
+                  }]
+              }, {
+                  "featureType": "road.highway.controlled_access",
+                  "elementType": "geometry",
+                  "stylers": [{
+                      "visibility": "on"
+                  }, {
+                      "color": "#e28888"
+                  }]
+              }, {
+                  "featureType": "road.highway.controlled_access",
+                  "elementType": "labels.icon",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "road.highway",
+                  "elementType": "labels.text.stroke",
+                  "stylers": [{
+                      "lightness": 1
+                  }, {
+                      "color": "#ffffff"
+                  }]
+              }, {
+                  "featureType": "water",
+                  "elementType": "geometry",
+                  "stylers": [{
+                      "color": "#c3c3c8"
+                  }]
+              }, {
+                  "featureType": "water",
+                  "elementType": "labels.icon",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "water",
+                  "elementType": "labels.text.fill",
+                  "stylers": [{
+                      "color": "#ffffff"
+                  }]
+              }, {
+                  "featureType": "water",
+                  "elementType": "labels.text.stroke",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "road.local",
+                  "elementType": "geometry.stroke",
+                  "stylers": [{
+                      "color": "#ff8282"
+                  }]
+              }, {
+                  "featureType": "road.arterial",
+                  "elementType": "geometry",
+                  "stylers": [{
+                      "color": "#c8c8c8"
+                  }]
+              }, {
+                  "featureType": "road.arterial",
+                  "elementType": "labels.icon",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "road.arterial",
+                  "elementType": "labels.text.stroke",
+                  "stylers": [{
+                      "color": "#ffffff"
+                  }]
+              }, {
+                  "featureType": "transit.line",
+                  "elementType": "geometry.fill",
+                  "stylers": [{
+                      "color": "#a0a0a0"
+                  }]
+              }, {
+                  "featureType": "poi.park",
+                  "elementType": "geometry.fill",
+                  "stylers": [{
+                      "color": "#a0a0a0"
+                  }, {
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "poi.business",
+                  "elementType": "geometry",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "road",
+                  "stylers": [{
+                      "visibility": "simplified"
+                  }]
+              }, {
+                  "featureType": "road",
+                  "elementType": "labels",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "poi.medical",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "poi.place_of_worship",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "poi.school",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "poi.government",
+                  "stylers": [{
+                      "color": "#f0f0f0"
+                  }]
+              }, {
+                  "featureType": "poi.sports_complex",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "poi.attraction",
+                  "stylers": [{
+                      "color": "#f0f0f0"
+                  }]
+              }, {
+                  "featureType": "road.highway",
+                  "elementType": "labels.text",
+                  "stylers": [{
+                      "visibility": "on"
+                  }]
+              }, {
+                  "featureType": "road.local",
+                  "elementType": "geometry.stroke",
+                  "stylers": [{
+                      "visibility": "on"
+                  }, {
+                      "color": "#c8c8c8"
+                  }]
+              }, {
+                  "featureType": "poi",
+                  "elementType": "labels.icon",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "poi",
+                  "elementType": "labels.text.stroke",
+                  "stylers": [{
+                      "color": "#ffffff"
+                  }]
+              }, {
+                  "featureType": "poi",
+                  "elementType": "labels.text.fill",
+                  "stylers": [{
+                      "color": "#646464"
+                  }]
+              }, {
+                  "featureType": "road.highway",
+                  "elementType": "geometry",
+                  "stylers": [{
+                      "color": "#e18282"
+                  }]
+              }, {
+                  "featureType": "transit.station.airport",
+                  "stylers": [{
+                      "color": "#dcdcdc"
+                  }, {
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "transit",
+                  "elementType": "labels",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "landscape.natural",
+                  "elementType": "geometry",
+                  "stylers": [{
+                      "color": "#ffffff"
+                  }]
+              }, {
+                  "featureType": "poi",
+                  "elementType": "geometry.fill",
+                  "stylers": [{
+                      "color": "#e1e1e1"
+                  }]
+              }, {
+                  "featureType": "administrative",
+                  "elementType": "geometry.fill",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "landscape",
+                  "stylers": [{
+                      "color": "#fffff5"
+                  }]
+              }, {
+                  "featureType": "landscape.man_made"
+              }, {
+                  "featureType": "poi.government",
+                  "elementType": "geometry.fill",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {
+                  "featureType": "poi.attraction",
+                  "elementType": "geometry.fill",
+                  "stylers": [{
+                      "visibility": "off"
+                  }]
+              }, {}],
+          };
+        map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+        map.panBy(( 400) , 0);
+        $(".post:first").data('currentlyInView', true);
+          google.maps.event.addListener(map, 'zoom_changed', function() {
+    _gaq.push(['_trackEvent', 'Map', 'Zoom', '', map.getZoom() ]);
+
+          });
+
+      });
+      
+      XMLHttpRequest.prototype.originalSend=XMLHttpRequest.prototype.send;
+XMLHttpRequest.prototype.send=function(s){
+    this.addEventListener('load',function(){
+  
+        // Eventhandling fuer wenn ein Post sichtbar wird, um Karte zu aktuallisieren
+        $("#content").scroll(function() {
+          $(".post").map(function() {
+            if (! $(this).data('currentlyInView') && $(this).offset().top > 70 && $(this).offset().top < 180 ) {
+              // Post ist sichtbar --> aktuallisieren
+      
+              moveToPostLocation(this);
+              return;
+            }
+          });
+        });
+       },false);
+    this.originalSend(s);
+}
+
+    </script>
+  </head>
+    <body>
+    <section id="content">
+        <section id="container">
+      <section id="masthead">
+        <h1><a href="/"><img src="http://static.tumblr.com/h8pbhse/THImrbcfz/header.png" alt="ROAD TO BAT COUNTRY" width="732" height="117" /></a></h1>
+        <p id="subheading" class="heading">SAN FRANCISCO / LOS ANGELES / LAS VEGAS</p>
+        <p id="tagline" class="heading">&raquo;WE CAN'T STOP HERE &ndash; THIS IS <u>BAT COUNTRY</u>!&laquo;</p> 
+      </section>
+      <section id="blog">
+            <ul id="posts">
+                <!-- START POSTS -->
+                {block:Posts}
+
+                        <li class="post group" id="post-{PostID}">
+                            <div class="divider divider-{PostAuthorName}">&nbsp;</div>
+
+                        {block:Photo}
+                                    {block:Date}<section class="date">{DayOfMonth}. {Month} {Year}</section>{/block:Date}                            <section class="top media photo" style="display:block;">
+                                 {LinkOpenTag}<img src="{PhotoURL-HighRes}" alt="{PhotoAlt}"> {LinkCloseTag}{Question}
+                            </section>
+                        {/block:Photo}
+
+                        {block:Photoset}                                    {block:Date}<section class="date">{DayOfMonth}. {Month} {Year}</section>{/block:Date}
+                            <section class="top media photoset">
+                                {Photoset-700}
+                            </section>
+                        {/block:Photoset}
+
+                        {block:Link}                                    {block:Date}<section class="date">{DayOfMonth}. {Month} {Year}</section>{/block:Date}
+                            <section class="top link_post">
+                                <a href="{URL}" class="link">{Name}<span class="arrow"></span></a>
+                            </section>
+                        {/block:Link}
+
+                        {block:Audio}                                    {block:Date}<section class="date">{DayOfMonth}. {Month} {Year}</section>{/block:Date}
+                            <section class="top audio">
+                            {AudioPlayerBlack}
+                            </section>
+                        {/block:Audio}
+
+                        {block:Video}                                    {block:Date}<section class="date">{DayOfMonth}. {Month} {Year}</section>{/block:Date}
+                            <section class="top media video">
+                                {Video-700}
+                            </section>
+                        {/block:Video}
+
+                        <section class="group caption_and_post_info
+                            {block:Photo} after_top_part isphoto{/block:Photo}
+                            {block:Photoset} after_top_part isphoto{/block:Photoset}
+                            {block:Link} after_top_part islink{/block:Link}
+                            {block:Audio} after_top_part isaudio{/block:Audio}
+                            {block:Video} after_top_part isvideo{/block:Video}
+                        ">
+                            {block:Text}
+                                <section class="caption group">
+                                    {block:Title}<h2><a href="{Permalink}">{Title}</a></h2>{/block:Title}
+
+                                    {block:Date}<section class="date">{DayOfMonth}. {Month} {Year}</section>{/block:Date}
+
+                                    <div class="cont group">{Body}</div>
+                                    {block:ContentSource}
+                                        <div class="cont content_source">
+                                            <a href="{SourceURL}">
+                                                {lang:Source}:
+                                                {block:SourceLogo}
+                                                    <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                                {/block:SourceLogo}
+                                                {block:NoSourceLogo}
+                                                    {SourceTitle}
+                                                {/block:NoSourceLogo}
+                                            </a>
+                                        </div>
+                                    {/block:ContentSource}
+                                </section>
+                            {/block:Text}
+
+                            {block:Answer}                                    {block:Date}<section class="date">{DayOfMonth}. {Month} {Year}</section>{/block:Date}
+                                <section class="caption group">
+                                    <div class="cont group">
+
+                                        <div class="question bubble">
+                                            {Question}
+                                            <span class="arrow border"></span>
+                                            <span class="arrow fill"></span>
+                                        </div>
+                                        <div class="asker group">
+                                            <img src="{AskerPortraitURL-24}" width="24" height="24" /> {Asker}
+                                        </div>
+                                        <div class="answer cont">{Answer}</div>
+                                    </div>
+                                    {block:ContentSource}
+                                        <div class="cont content_source">
+                                            <a href="{SourceURL}">
+                                                {lang:Source}:
+                                                {block:SourceLogo}
+                                                    <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                                {/block:SourceLogo}
+                                                {block:NoSourceLogo}
+                                                    {SourceTitle}
+                                                {/block:NoSourceLogo}
+                                            </a>
+                                        </div>
+                                    {/block:ContentSource}
+                                </section>
+                            {/block:Answer}
+                            
+                            {block:Photo}
+                                <section class="caption group">
+                                    {block:Caption}
+                                        <div class="cont">{Caption}</div>
+                                    {/block:Caption}
+                                    {block:ContentSource}
+                                        <div class="cont content_source">
+                                            <a href="{SourceURL}">
+                                                {lang:Source}:
+                                                {block:SourceLogo}
+                                                    <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                                {/block:SourceLogo}
+                                                {block:NoSourceLogo}
+                                                    {SourceTitle}
+                                                {/block:NoSourceLogo}
+                                            </a>
+                                        </div>
+                                    {/block:ContentSource}
+                                </section>
+                            {/block:Photo}
+
+                            {block:Photoset}
+                                <section class="caption group">
+                                    {block:Caption}
+                                        <div class="cont">{Caption}</div>
+                                    {/block:Caption}
+            
+                                    {block:Date}<section class="date">{DayOfMonth}. {Month} {Year}</section>{/block:Date}
+                                </section>
+                            {/block:Photoset}
+                            
+                            {block:Quote}
+                                    {block:Date}<section class="date">{DayOfMonth}. {Month} {Year}</section>{/block:Date}                                    <section class="caption group">
+                                        <section class="quote"><span>&raquo;</span>{Quote}<span>&laquo;</span></section>
+                                        {block:Source}
+                                            <div class="cont quote_source">&mdash; {Source}</div>
+                                        {/block:Source}
+                                    </section>
+                            {/block:Quote}
+                            
+                            {block:Link}
+                                {block:Description}
+                                    <section class="caption group">
+                                        <div class="cont">{Description}</div>
+                                    </section>
+                                {/block:Description}
+                                {block:Date}<section class="date">{DayOfMonth}. {Month} {Year}</section>{/block:Date}
+                            {/block:Link}
+                            
+<!--                            {block:Chat}
+                                <section class="caption group">
+                                    {block:Title}<h2><a href="{Permalink}">{Title}</a></h2>{/block:Title}
+                                    <ul class="conversation">
+                                        {block:Lines}
+                                            <li class="chat_line user{UserNumber}">
+                                                {block:Label}
+                                                    <strong>{Label}</strong>&nbsp;&nbsp;
+                                                {/block:Label}
+                                                {Line}
+                                            </li>
+                                        {/block:Lines}
+                                    </ul>
+                                    {block:ContentSource}
+                                        <div class="cont content_source">
+                                            <a href="{SourceURL}">
+                                                {lang:Source}:
+                                                {block:SourceLogo}
+                                                    <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                                {/block:SourceLogo}
+                                                {block:NoSourceLogo}
+                                                    {SourceTitle}
+                                                {/block:NoSourceLogo}
+                                            </a>
+                                        </div>
+                                    {/block:ContentSource}
+                                </section>
+                            {/block:Chat}
+-->
+                            {block:Audio}
+                                {block:Caption}
+                                    <section class="caption group">
+                                        <div class="cont">{Caption}</div>
+                                        {block:Date}<section class="date">{DayOfMonth}. {Month} {Year}</section>{/block:Date}
+                                        {block:ContentSource}
+                                            <div class="cont content_source">
+                                                <a href="{SourceURL}">
+                                                    {lang:Source}:
+                                                    {block:SourceLogo}
+                                                        <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                                    {/block:SourceLogo}
+                                                    {block:NoSourceLogo}
+                                                        {SourceTitle}
+                                                    {/block:NoSourceLogo}
+                                                </a>
+                                            </div>
+                                        {/block:ContentSource}
+                                    </section>
+                                {/block:Caption}
+                            {/block:Audio}
+                            
+                            {block:Video}
+                                <section class="caption group">
+                                {block:Caption}
+                                    <div class="cont">{Caption}</div>
+                                {/block:Caption}
+                                {block:Date}<section class="date">{DayOfMonth}. {Month} {Year}</section>{/block:Date}
+                                {block:ContentSource}
+                                    <div class="cont content_source">
+                                        <a href="{SourceURL}">
+                                            {lang:Source}:
+                                            {block:SourceLogo}
+                                                <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                            {/block:SourceLogo}
+                                            {block:NoSourceLogo}
+                                                {SourceTitle}
+                                            {/block:NoSourceLogo}
+                                        </a>
+                                    </div>
+                                {/block:ContentSource}
+                                </section>
+                            {/block:Video}
+
+
+                            {block:HasTags}
+                                <ul class="tags">
+                                {block:Tags}
+                                    <li><a class="tag" href="{TagURL}"><span>#</span>{Tag}</a></li>
+                                {/block:Tags}
+                                </ul>
+                            {/block:HasTags}
+                            </section>
+                    </li>
+                    {block:HasTags}
+                        <script type="text/javascript">
+                            var tags = new Array();
+                            {block:Tags}
+                                tags.push({JSTag});
+                            {/block:Tags}
+                            $(document).ready(function(){$("#post-{PostID}").data('tags', tags)});
+
+                            // Adresse aus Tags holen
+                            var address;
+                            jQuery.each(tags, function(){
+                              var hit = this.match(/^location: (.+)/i);
+                              if (hit) {
+                                hit[1].replace(/[~\.;:-]/, ', '); // Kommas sind in Tumblrs Tags nicht erlaubt
+                                address = hit[1];
+                              }
+                            });
+                          
+                            // Geocoding
+                            if (address) {
+                                var geocoder = new google.maps.Geocoder();
+                                geocoder.geocode( { 'address': address}, function(results, status) {
+                                  if (status == google.maps.GeocoderStatus.OK) {
+                                    // Geocoding-Infos anhaengen
+                                    $("#post-{PostID}").data('coords', results[0].geometry.location);
+                                  } else {
+                                    alert("Geocode was not successful for the following reason: " + status);
+                                  }
+                                });
+                            }
+
+                        </script>
+                    {/block:HasTags}
+
+                    
+                {/block:Posts}
+                <!-- END POSTS -->
+            </ul>      </section>
+      <section id="footer">
+     {block:Pagination}
+        <div id="navigation">
+            {block:PreviousPage}
+                <a href="{PreviousPage}" id="prevPage" title="newer posts"> &laquo; neuere Beiträge</a>
+            {/block:PreviousPage}
+            {block:PreviousPage}
+            {block:NextPage}&nbsp;/&nbsp;{/block:NextPage}
+            {/block:PreviousPage}
+    
+            {block:NextPage}
+                <a href="{NextPage}" id="nextPage" title="older posts">ältere Beiträge &raquo;</a>
+            {/block:NextPage}
+        </div>
+        {/block:Pagination}      
+                  
+        &nbsp;
+        </section>
+        
+        </section>
+      </section>
+    <section id="map-canvas"/>
+  
+        {block:IfGoogleAnalyticsID}
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '{text:Google Analytics ID}']);
+  _gaq.push(['_setDomainName', 'tumblr.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>        
+        {/block:IfGoogleAnalyticsID}
+
+    <script>
+        $(document).ready(function() {
+      
+        // Eventhandling fuer wenn ein Post sichtbar wird, um Karte zu aktuallisieren
+        $("#content").scroll(function() {
+          $(".post").map(function() {
+            if (! $(this).data('currentlyInView') && $(this).offset().top > 70 && $(this).offset().top < 180 ) {
+              // Post ist sichtbar --> aktuallisieren
+      
+              moveToPostLocation(this);
+              _gaq.push(['_trackEvent', 'Map', 'ScrollInView', $(this).attr('id')]);
+              return;
+            }
+          });
+        });
+        });
+    </script>
+    </body>
+</html>
