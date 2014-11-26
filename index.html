@@ -770,8 +770,6 @@ if (address) {
     if (status == google.maps.GeocoderStatus.OK) {
       // attach the coordinates to the post
       $("#post-{PostID}").data('coords', results[0].geometry.location);
-    } else {
-      alert("Geocode was not successful for the following reason: " + status);
     }
   });
 }
