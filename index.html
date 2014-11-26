@@ -493,9 +493,11 @@ google.maps.event.addDomListener(window, 'load', function() {
   // install an event handler to track the zooming event in Google Analytics
   // because it was not clear if people would understand the zoom functionality
   // as the mouse-wheel is not used for zoom but for scrolling the blog
-  google.maps.event.addListener(map, 'zoom_changed', function() {
-    _gaq.push(['_trackEvent', 'Map', 'Zoom', '', map.getZoom() ]);
-  });
+  {block:IfGoogleAnalyticsID}
+    google.maps.event.addListener(map, 'zoom_changed', function() {
+      _gaq.push(['_trackEvent', 'Map', 'Zoom', '', map.getZoom() ]);
+    });
+  {/block:IfGoogleAnalyticsID}
 });
     
 XMLHttpRequest.prototype.originalSend=XMLHttpRequest.prototype.send;
@@ -826,7 +828,9 @@ $(document).ready(function() {
         moveToPostLocation(this);
         
         // we are also tracking how many posts the visitors view to check if they understand the concept
-        _gaq.push(['_trackEvent', 'Map', 'ScrollInView', $(this).attr('id')]);
+        {block:IfGoogleAnalyticsID}
+          _gaq.push(['_trackEvent', 'Map', 'ScrollInView', $(this).attr('id')]);
+        {/block:IfGoogleAnalyticsID}
         return;
       }
     });
