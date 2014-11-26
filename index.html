@@ -214,42 +214,41 @@
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={text:Google Maps Key}&sensor=false"></script>
     <script type="text/javascript">
-var map; //Globales Google Map Objekt
+var map; // global Google Map object
 google.maps.visualRefresh = true; // enable new gmap look for opt-inners
 
-// Weil die Karte halb bedeckt ist, muss der Mittelpunkt weiter links sein
+// because the map is halfway covered we have to move the center to the left
 function custPanTo(map, coords) {
-map.panTo(coords);
-map.panBy(400, 0);
+  map.panTo(coords);
+  map.panBy(400, 0);
 }
 
-// Sichtbare Posts handlen und Karte bewegen  
+// handle visible posts and move the map 
 function moveToPostLocation(post) {
-// alle Posts auf 'nicht mehr sichtbar'
-$(".post").each(function() {
-  $(this).data('currentlyInView', false);
-});
-
-// aktuellen Post als sichtbar speichern
-$(post).data('currentlyInView', true);
-
-// Map aktuallisieren
-if ($(post).data('coords')) {
-  custPanTo(map, $(post).data('coords'));
+  // flag all posts as 'not visible'
+  $(".post").each(function() {
+    $(this).data('currentlyInView', false);
+  });
+  
+  // flag the current post as 'visible'
+  $(post).data('currentlyInView', true);
+  
+  // refresh map
+  if ($(post).data('coords')) {
+    custPanTo(map, $(post).data('coords'));
 }
 }
 
-// GoogleMap starten
+// start Google Map 
 google.maps.event.addDomListener(window, 'load', function() {
   var mapOptions = {
     center: $(".post:first").data('coords') || new google.maps.LatLng(37.775, -122.418),
-    // center: new google.maps.LatLng(37.775, -122.418),
     zoom: 9,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     scrollwheel: false,
     mapTypeControlOptions: {
-        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-        position: google.maps.ControlPosition.LEFT_BOTTOM
+      style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+      position: google.maps.ControlPosition.LEFT_BOTTOM
     },
     panControl: false,
     scaleControl: true,
@@ -486,32 +485,34 @@ google.maps.event.addDomListener(window, 'load', function() {
             "visibility": "off"
         }]
     }, {}],
-};
-map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-map.panBy(( 400) , 0);
-$(".post:first").data('currentlyInView', true);
-google.maps.event.addListener(map, 'zoom_changed', function() {
-  _gaq.push(['_trackEvent', 'Map', 'Zoom', '', map.getZoom() ]);
-});
-
+  };
+  map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+  map.panBy((400), 0);
+  // flag the first post as 'visible' initially
+  $(".post:first").data('currentlyInView', true);
+  // install an event handler to track the zooming event in Google Analytics
+  // because it was not clear if people would understand the zoom functionality
+  // as the mouse-wheel is not used for zoom but for scrolling the blog
+  google.maps.event.addListener(map, 'zoom_changed', function() {
+    _gaq.push(['_trackEvent', 'Map', 'Zoom', '', map.getZoom() ]);
+  });
 });
     
 XMLHttpRequest.prototype.originalSend=XMLHttpRequest.prototype.send;
 XMLHttpRequest.prototype.send=function(s){
-this.addEventListener('load',function(){
-  // Eventhandling fuer wenn ein Post sichtbar wird, um Karte zu aktuallisieren
-    $("#content").scroll(function() {
-      $(".post").map(function() {
-        if (! $(this).data('currentlyInView') && $(this).offset().top > 70 && $(this).offset().top < 180 ) {
-          // Post ist sichtbar --> aktuallisieren
-  
-          moveToPostLocation(this);
-          return;
-        }
+  this.addEventListener('load',function(){
+    // event handling to refresh the map if a post is being scrolled into view
+      $("#content").scroll(function() {
+        $(".post").map(function() {
+          if (! $(this).data('currentlyInView') && $(this).offset().top > 70 && $(this).offset().top < 180 ) {
+            // the post is visible, we need to refresh the map
+            moveToPostLocation(this);
+            return;
+          }
+        });
       });
-    });
-  },false);
-this.originalSend(s);
+    },false);
+  this.originalSend(s);
 }
 
     </script>
@@ -733,18 +734,29 @@ this.originalSend(s);
             </li>
             {block:HasTags}
               <script type="text/javascript">
+// We are using the tumblr tags to hide locations for geocoding, so the map
+// understands where to move to. A location tag starts with 'location: ' followed
+// by the actuall location. As this blog of code gets repeated for each post, we
+// parse the tag and attach it to the post. We then geocode it and attach the
+// resulting coordinates aswell. Those will be used when the post gets scrolled
+// into view to move the map.
+
+// building arrays with tumblr is fun
 var tags = new Array();
 {block:Tags}
-    tags.push({JSTag});
+  tags.push({JSTag});
 {/block:Tags}
-$(document).ready(function(){$("#post-{PostID}").data('tags', tags)});
 
-// Adresse aus Tags holen
+$(document).ready(function(){
+  $("#post-{PostID}").data('tags', tags)
+});
+
+// find the address/location in the tags
 var address;
 jQuery.each(tags, function(){
   var hit = this.match(/^location: (.+)/i);
   if (hit) {
-    hit[1].replace(/[~\.;:-]/, ', '); // Kommas sind in Tumblrs Tags nicht erlaubt
+    hit[1].replace(/[~\.;:-]/, ', '); // commas are not allowed in tumblr tags as they are the separator
     address = hit[1];
   }
 });
@@ -754,7 +766,7 @@ if (address) {
   var geocoder = new google.maps.Geocoder();
   geocoder.geocode( { 'address': address}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-      // Geocoding-Infos anhaengen
+      // attach the coordinates to the post
       $("#post-{PostID}").data('coords', results[0].geometry.location);
     } else {
       alert("Geocode was not successful for the following reason: " + status);
@@ -805,13 +817,15 @@ _gaq.push(['_trackPageview']);
       <script>
 $(document).ready(function() {
 
-  // Eventhandling fuer wenn ein Post sichtbar wird, um Karte zu aktuallisieren
+  // event handling to refresh the map if a post is being scrolled into view
   $("#content").scroll(function() {
     $(".post").map(function() {
       if (! $(this).data('currentlyInView') && $(this).offset().top > 70 && $(this).offset().top < 180 ) {
-        // Post ist sichtbar --> aktuallisieren
+        // the post is visible, refresh it
   
         moveToPostLocation(this);
+        
+        // we are also tracking how many posts the visitors view to check if they understand the concept
         _gaq.push(['_trackEvent', 'Map', 'ScrollInView', $(this).attr('id')]);
         return;
       }
