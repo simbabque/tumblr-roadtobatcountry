@@ -8,10 +8,12 @@ Setup
 
 Edit your Tumblr theme and copy the HTML into the box. See the Tumblr help for more information.
 
-To use the theme, you require the following Google API keys:
+To use the theme, you require the following Google keys:
 
-- Google Maps API
+- Google Maps API (this is a generic one for all Google APIs, see https://code.google.com/apis/console/)
 - Google Analytics (optional)
+
+Do not set the number of posts per page to more than 10 or the Maps API will complain about too many requests.
 
 Tagging Locations
 -----------------
